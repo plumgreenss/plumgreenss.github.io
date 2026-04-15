@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinixHub | Oyun & Yazılım Portalı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="javascript.js">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600&display=swap');
+        
+        :root { --primary: #ff1f1f; --discord: #5865F2; --bg: #0a0a0c; --card: #141417; --glow: rgba(255, 31, 31, 0.4); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background: var(--bg); color: #ffffff; overflow-x: hidden; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(255, 31, 31, 0.05) 0%, transparent 80%); z-index: -1; }
+
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: rgba(16, 16, 19, 0.95); border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(15px); }
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 26px; text-transform: uppercase; cursor: pointer; }
+        .logo span { color: var(--primary); text-shadow: 0 0 10px var(--glow); }
+
+        .nav-menu { display: flex; gap: 10px; }
+        .nav-item { color: #bbb; text-decoration: none; font-family: 'Orbitron'; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.3s; padding: 8px 12px; border-radius: 5px; }
+        .nav-item:hover, .nav-item.active { color: #fff; background: rgba(255, 31, 31, 0.1); border-bottom: 2px solid var(--primary); }
+
+        .content-section { display: none; padding: 40px 8%; max-width: 1400px; margin: 0 auto; animation: fadeInUp 0.5s ease-out; }
+        .content-section.active { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero-box { text-align: center; padding: 60px 20px; border-radius: 24px; background: linear-gradient(145deg, #16161a, #0d0d0f); border: 1px solid rgba(255,255,255,0.03); margin-bottom: 40px; }
+        .hero-box h1 { font-family: 'Orbitron'; font-size: clamp(28px, 5vw, 40px); margin-bottom: 15px; }
+        .hero-box h1 span { color: var(--primary); }
+        
+        .search-box { position: relative; max-width: 500px; margin: 0 auto 30px; }
+        .search-box input { width: 100%; padding: 12px 15px 12px 45px; background: #1a1a1d; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; outline: none; }
+        .search-box i { position: absolute; left: 18px; top: 15px; color: #555; }
+
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .item-card { background: var(--card); border-radius: 15px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; text-align: center; display: flex; flex-direction: column; position: relative; }
+        .item-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(255, 31, 31, 0.1); }
+        
+        .text-logo { font-family: 'Orbitron'; font-size: 24px; font-weight: 900; margin-bottom: 10px; }
+        .badge { background: #333; color: #eee; font-size: 9px; font-weight: 900; padding: 2px 10px; border-radius: 4px; display: inline-block; margin-bottom: 10px; width: fit-content; align-self: center; }
+        .badge.pro { background: var(--primary); }
+
+        .dl-btn { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; text-decoration: none; border-radius: 10px; font-weight: 800; text-align: center; transition: 0.3s; font-size: 13px; cursor: pointer; border: none; }
+        .dl-btn:hover { background: #ff4747; transform: scale(1.03); }
+
+        footer { text-align: center; padding: 40px; color: #444; font-size: 11px; border-top: 1px solid #111; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo" onclick="showSection('home')">MINIX<span>HUB</span></div>
+        <div class="nav-menu">
+            <div class="nav-item active" id="btn-home" onclick="showSection('home')">ANASAYFA</div>
+            <div class="nav-item" id="btn-games" onclick="showSection('games')">OYUNLAR</div>
+            <div class="nav-item" id="btn-apps" onclick="showSection('apps')">UYGULAMALAR</div>
+        </div>
+    </nav>
+
+    <section id="home" class="content-section active">
+        <div class="hero-box">
+            <h1>HOŞ <span>GELDİNİZ</span></h1>
+            <p style="color:#888; margin-bottom: 30px;">Türkiye'nin en kapsamlı oyun ve yazılım arşivi. Her şey elinin altında.</p>
+            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                <button class="dl-btn" style="width:180px" onclick="showSection('games')">OYUNLAR</button>
+                <button class="dl-btn" style="width:180px; background:#333;" onclick="showSection('apps')">UYGULAMALAR</button>
+                <a href="https://discord.gg/JRMsJvqJrc" target="_blank" class="dl-btn" style="width:180px; background:var(--discord)">DISCORD</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="games" class="content-section">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="gameSearch" placeholder="Oyun ara..." onkeyup="filterItems('gameSearch', 'gameGrid')">
+        </div>
+        <div class="item-grid" id="gameGrid"></div>
+    </section>
+
+    <section id="apps" class="content-section">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="appSearch" placeholder="Uygulama ara..." onkeyup="filterItems('appSearch', 'appGrid')">
+        </div>
+        <div class="item-grid" id="appGrid"></div>
+    </section>
+
+    <footer>&copy; 2026 MINIXHUB | BY PLUMGREENSS</footer>
+
+    <script>
+        const gamesList = [
+            {n: "GTA V", d: "7Launcher | Full", l: "https://7launcher.com/?lang=en?download=&kcccount=https://7launcher.com/dl/7l_gta-v_latest_setup.exe"},
+            {n: "MC", d: "Minecraft | TLauncher", l: "https://dl1.tlauncher.org/f.php?f=files%2FTLauncher-Installer-1.9.5.1.exe"},
+            {n: "VAL", d: "Valorant | Riot Games", l: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe"},
+            {n: "CS 2", d: "Counter Strike 2 | Steam", l: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe"},
+            {n: "LOL", d: "League of Legends", l: "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.sg2.exe"},
+            {n: "RBLX", d: "Roblox Player", l: "https://www.roblox.com/tr/download/client?token=6GWTVQ2MB4"},
+            {n: "SIMS 4", d: "The Sims 4 | All DLC", l: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe"},
+            // (Kısaltmak için 10 tane bıraktım, sen listeyi istediğin kadar büyütebilirsin)
+        ];
+
+        const appsList = [
+            {n: "EXCEL", d: "Microsoft Office Suite", l: "https://www.gezginler.net/indir/microsoft-excel.html", b: "PRO"},
+            {n: "WORD", d: "Microsoft Office Suite", l: "https://www.gezginler.net/indir/microsoft-word.html", b: "PRO"},
+            {n: "Powerpoint", d: "PowerPoint | Sunum", l: "https://www.gezginler.net/indir/powerpoint.html", b: "PRO"},
+            {n: "CHROME", d: "Google Chrome Tarayıcı", l: "https://www.google.com/chrome/"},
+            {n: "DISCORD", d: "İletişim & Sohbet", l: "https://discord.com/download"},
+            {n: "STEAM", d: "Oyun Platformu", l: "https://store.steampowered.com/about/"},
+            {n: "WINRAR", d: "Dosya Sıkıştırma", l: "https://www.gezginler.net/indir/winrar.html"},
+            {n: "VLC", d: "Video Oynatıcı", l: "https://www.gezginler.net/indir/vlc-player.html"},
+            {n: "OBS", d: "Yayın & Kayıt", l: "https://obsproject.com/"},
+            {n: "UTORRENT", d: "Torrent İndirici", l: "https://www.gezginler.net/indir/utorrent.html"},
+            {n: "SPOTIFY", d: "Müzik Platformu", l: "https://www.gezginler.net/indir/spotify.html"},
+            {n: "IDM", d: "Internet Download Manager", l: "https://www.gezginler.net/indir/internet-download-manager.html", b: "PRO"},
+            {n: "BRAVE", d: "Hızlı Tarayıcı", l: "https://www.gezginler.net/indir/brave.html"}
+        ];
+
+        function renderItems(list, containerId, isApp = false) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = list.map(item => `
+                <div class="item-card" data-name="${item.n.toLowerCase()} ${item.d.toLowerCase()}">
+                    <span class="badge ${item.b === 'PRO' ? 'pro' : ''}">${item.b || 'FULL'}</span>
+                    <div class="text-logo">${item.n}</div>
+                    <h3 style="color:#666; font-size:12px; margin-bottom:15px;">${item.d}</h3>
+                    <a href="${item.l}" class="dl-btn">İNDİR</a>
+                </div>
+            `).join('');
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('btn-' + id).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function filterItems(inputId, gridId) {
+            let input = document.getElementById(inputId).value.toLowerCase();
+            let cards = document.getElementById(gridId).getElementsByClassName('item-card');
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getAttribute('data-name');
+                cards[i].style.display = name.includes(input) ? "" : "none";
+            }
+        }
+
+        // Başlangıçta listeleri yükle
+        renderItems(gamesList, 'gameGrid');
+        renderItems(appsList, 'appGrid', true);
+    </script>
+</body>
+</html>
